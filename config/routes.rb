@@ -1,4 +1,18 @@
 Rails.application.routes.draw do
+  resources :users
+
+  root 'organizations#index'
+
+  resources :car_models do
+	resources :model_types
+  end
+  
+
+  resources :organizations
+
+  get 'models/:model_slug/model_types', to: 'car_models#model_types', default: {format: 'json'}
+  post 'models/:model_slug/model_types_price/:model_type_slug', to: 'model_types#model_type_price', default: {format: 'json'}
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
