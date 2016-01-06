@@ -16,7 +16,31 @@
 # users commonly want.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+
+module RequestsHelper
+  def retrieve_access_token
+    post "/token", {name: 'user1', password: 'user1', format: :json}
+	expect(last_response.status).to eq(200)
+    JSON(last_response.body)['token']
+  end
+
+  def get_with_token(path, params={}, headers={})
+    headers.merge!('HTTP_ACCESS_TOKEN' => retrieve_access_token)
+    get path, params, headers
+  end
+
+  def post_with_token(path, params={}, headers={})
+    headers.merge!('HTTP_ACCESS_TOKEN' => retrieve_access_token)
+    post path, params, headers
+  end
+end
+
 RSpec.configure do |config|
+
+  # Include the requests helper
+  config.include RequestsHelper, type: :request  
+
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
