@@ -57,7 +57,7 @@ describe "Get Model Types API", :type => :api do
 	end
   end
   
-  describe "for other organization" do
+  describe "for other organizations" do
 	let(:org_valid_attributes2) {
 		{ name: 'Organization2', public_name: 'Public name2', org_type: 'Show room', pricing_policy: 'Flexible' }
 	}
@@ -78,15 +78,20 @@ describe "Get Model Types API", :type => :api do
 	end
 	
 	it "doesn't show models from different organization" do
-		get_with_token model_types_api.gsub(':model_slug', @car_model.model_slug)
-		expect(last_response.status).to eq(200)
-		expect(JSON.parse(last_response.body)['models'].any? { |m| m['name'] == @car_model.name }).to eq(true)
 		get_with_token model_types_api.gsub(':model_slug', @car_model2.model_slug)
 		expect(last_response.status).to eq(200)
 		expect(JSON.parse(last_response.body)['models'].any? { |m| m['name'] == @car_model2.name }).to eq(false)
 		get_with_token model_types_api.gsub(':model_slug', @car_model.model_slug), {}, {}, 'user2', 'user2'
 		expect(last_response.status).to eq(200)
 		expect(JSON.parse(last_response.body)['models'].any? { |m| m['name'] == @car_model.name }).to eq(false)
+	end
+	it "shows models from the same organization" do
+		get_with_token model_types_api.gsub(':model_slug', @car_model.model_slug)
+		expect(last_response.status).to eq(200)
+		expect(JSON.parse(last_response.body)['models'].any? { |m| m['name'] == @car_model.name }).to eq(true)
+		get_with_token model_types_api.gsub(':model_slug', @car_model.model_slug), {}, {}, 'user2', 'user2'
+		expect(last_response.status).to eq(200)
+		expect(JSON.parse(last_response.body)['models'].any? { |m| m['name'] == @car_model2.name }).to eq(true)
 	end
   end
 end
