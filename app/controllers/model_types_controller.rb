@@ -1,5 +1,5 @@
 class ModelTypesController < ApplicationController
-  before_action :set_organization
+  before_filter :authenticate
   before_action :set_car_model
   before_action :set_model_type, only: [:show, :edit, :update, :destroy]
 

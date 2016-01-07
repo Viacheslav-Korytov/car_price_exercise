@@ -1,4 +1,5 @@
 class OrganizationsController < ApplicationController
+  before_filter :authenticate
   before_action :set_organization, only: [:show, :edit, :update, :destroy]
 
   # GET /organizations
