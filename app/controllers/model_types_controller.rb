@@ -75,6 +75,6 @@ class ModelTypesController < ApplicationController
     end
 		
     def set_car_model
-      @car_model = @organization.car_models.where(model_slug: params[:car_model_id]).first
+      @car_model = CarModel.where(model_slug: params[:car_model_id]).first
     end
 end

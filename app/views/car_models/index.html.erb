@@ -19,6 +19,7 @@
         <td><%= link_to 'Show', car_model %></td>
         <td><%= link_to 'Edit', edit_car_model_path(car_model) %></td>
         <td><%= link_to 'Destroy', car_model, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		<td><%= link_to 'Model Types', car_model_model_types_path(car_model) %></td>
       </tr>
     <% end %>
   </tbody>

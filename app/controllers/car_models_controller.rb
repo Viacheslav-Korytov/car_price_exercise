@@ -5,7 +5,7 @@ class CarModelsController < ApplicationController
   # GET /car_models
   # GET /car_models.json
   def index
-    @car_models = @organization.car_models.all
+    @car_models = CarModel.all
   end
 
   # GET /car_models/1
@@ -25,7 +25,7 @@ class CarModelsController < ApplicationController
   # POST /car_models
   # POST /car_models.json
   def create
-    @car_model = @organization.car_models.new(car_model_params)
+    @car_model = CarModel.new(car_model_params)
 
     respond_to do |format|
       if @car_model.save
@@ -65,7 +65,7 @@ class CarModelsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_car_model
-      @car_model = @organization.car_models.where(model_slug: params[:id]).first
+      @car_model = CarModel.where(model_slug: params[:id]).first
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
