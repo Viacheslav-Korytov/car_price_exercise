@@ -51,6 +51,7 @@ class ModelType < ActiveRecord::Base
 	uri = URI.parse(url)
 	http = Net::HTTP.new(uri.host, uri.port)
 	while true
+		http.use_ssl = (uri.scheme == "https")
 		response = http.request(Net::HTTP::Get.new(uri.request_uri))
 		if response.code.to_i == 301
 			uri = URI.parse(response.header['location'])
