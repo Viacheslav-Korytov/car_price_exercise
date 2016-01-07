@@ -18,19 +18,19 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
 module RequestsHelper
-  def retrieve_access_token
-    post "/token", {name: 'user1', password: 'user1', format: :json}
+  def retrieve_access_token(name = 'user1', password = 'user1')
+    post "/token", {name: name, password: password, format: :json}
 	expect(last_response.status).to eq(200)
     JSON(last_response.body)['token']
   end
 
-  def get_with_token(path, params={}, headers={})
-    headers.merge!('HTTP_ACCESS_TOKEN' => retrieve_access_token)
+  def get_with_token(path, params={}, headers={}, name = 'user1', password = 'user1')
+    headers.merge!('HTTP_ACCESS_TOKEN' => retrieve_access_token(name, password))
     get path, params, headers
   end
 
-  def post_with_token(path, params={}, headers={})
-    headers.merge!('HTTP_ACCESS_TOKEN' => retrieve_access_token)
+  def post_with_token(path, params={}, headers={}, name = 'user1', password = 'user1')
+    headers.merge!('HTTP_ACCESS_TOKEN' => retrieve_access_token(name, password))
     post path, params, headers
   end
 end

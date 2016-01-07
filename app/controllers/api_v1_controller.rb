@@ -1,6 +1,5 @@
 class ApiV1Controller < ApplicationController
   before_filter :authenticate_user_from_token, except: [:token]
-  before_action :set_organization
   
   
   def model_types
@@ -40,7 +39,9 @@ class ApiV1Controller < ApplicationController
   def authenticate_user_from_token
 	token = request.headers['HTTP_ACCESS_TOKEN']
 	@user = User.where(auth_token: token).first unless token.nil?
-	unless token || @user
+	if token && @user
+		@organization = @user.organization
+	else
 		render json: { error: 'Bad Token'}, status: 401
 	end
   end
