@@ -21,11 +21,11 @@
   </div>
   <div class="field">
     <%= f.label :org_type %><br>
-    <%= f.text_field :org_type %>
+    <%= f.select(:org_type, options_for_select(["Show room", "Service", "Dealer"])  ) %>
   </div>
   <div class="field">
     <%= f.label :pricing_policy %><br>
-    <%= f.text_field :pricing_policy %>
+    <%= f.select(:pricing_policy, options_for_select(["Flexible", "Fixed", "Prestige"]) ) %>
   </div>
   <div class="actions">
     <%= f.submit %>

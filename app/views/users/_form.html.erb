@@ -20,17 +20,12 @@
     <%= f.text_field :password %>
   </div>
   <div class="field">
-    <%= f.label :auth_token %><br>
-    <%= f.text_field :auth_token %>
-  </div>
-  <div class="field">
     <%= f.label :admin %><br>
     <%= f.check_box :admin %>
   </div>
-  <div class="field">
-    <%= f.label :organization_id %><br>
-    <%= f.text_field :organization_id %>
-  </div>
+  
+  <%= f.select(:organization_id, options_from_collection_for_select(Organization.all, "id", "name") ) %>
+  
   <div class="actions">
     <%= f.submit %>
   </div>

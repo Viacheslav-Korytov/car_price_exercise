@@ -1,10 +1,11 @@
 class CarModelsController < ApplicationController
+  before_action :set_organization
   before_action :set_car_model, only: [:show, :edit, :update, :destroy]
 
   # GET /car_models
   # GET /car_models.json
   def index
-    @car_models = CarModel.all
+    @car_models = @organization.car_models.all
   end
 
   # GET /car_models/1
@@ -14,7 +15,7 @@ class CarModelsController < ApplicationController
 
   # GET /car_models/new
   def new
-    @car_model = CarModel.new
+    @car_model = @organization.car_models.new
   end
 
   # GET /car_models/1/edit
@@ -24,7 +25,7 @@ class CarModelsController < ApplicationController
   # POST /car_models
   # POST /car_models.json
   def create
-    @car_model = CarModel.new(car_model_params)
+    @car_model = @organization.car_models.new(car_model_params)
 
     respond_to do |format|
       if @car_model.save
@@ -64,11 +65,12 @@ class CarModelsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_car_model
-      @car_model = CarModel.find(params[:id])
+      @car_model = @organization.car_models.where(model_slug: params[:id]).first
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def car_model_params
       params.require(:car_model).permit(:name, :model_slug, :organization_id)
     end
+	
 end

@@ -15,7 +15,7 @@
       <tr>
         <td><%= car_model.name %></td>
         <td><%= car_model.model_slug %></td>
-        <td><%= car_model.organization %></td>
+        <td><%= car_model.organization.name %></td>
         <td><%= link_to 'Show', car_model %></td>
         <td><%= link_to 'Edit', edit_car_model_path(car_model) %></td>
         <td><%= link_to 'Destroy', car_model, method: :delete, data: { confirm: 'Are you sure?' } %></td>

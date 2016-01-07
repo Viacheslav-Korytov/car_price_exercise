@@ -19,10 +19,10 @@
         <td><%= model_type.model_type_slug %></td>
         <td><%= model_type.model_type_code %></td>
         <td><%= model_type.base_price %></td>
-        <td><%= model_type.car_model %></td>
-        <td><%= link_to 'Show', model_type %></td>
-        <td><%= link_to 'Edit', edit_model_type_path(model_type) %></td>
-        <td><%= link_to 'Destroy', model_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= model_type.car_model.name %></td>
+        <td><%= link_to 'Show', car_model_model_type_path(@car_model, model_type) %></td>
+        <td><%= link_to 'Edit', edit_car_model_model_type_path(@car_model, model_type) %></td>
+        <td><%= link_to 'Destroy', car_model_model_type_path(@car_model, model_type), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +30,4 @@
 
 <br>
 
-<%= link_to 'New Model type', new_model_type_path %>
+<%= link_to 'New Model type', new_car_model_model_type_path(@car_model) %>

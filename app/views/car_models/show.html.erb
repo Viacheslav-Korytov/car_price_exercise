@@ -12,8 +12,9 @@
 
 <p>
   <strong>Organization:</strong>
-  <%= @car_model.organization %>
+  <%= @car_model.organization.name %>
 </p>
 
 <%= link_to 'Edit', edit_car_model_path(@car_model) %> |
-<%= link_to 'Back', car_models_path %>
+<%= link_to 'Back', car_models_path %> |
+<%= link_to 'Model Types', car_model_model_types_path(@car_model) %>

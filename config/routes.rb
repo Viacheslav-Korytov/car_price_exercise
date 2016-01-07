@@ -10,8 +10,10 @@ Rails.application.routes.draw do
 
   resources :organizations
 
-  get 'models/:model_slug/model_types', to: 'car_models#model_types', default: {format: 'json'}
-  post 'models/:model_slug/model_types_price/:model_type_slug', to: 'model_types#model_type_price', default: {format: 'json'}
+  get 'models/:model_slug/model_types', to: 'api_v1#model_types', default: {format: 'json'}
+  post 'models/:model_slug/model_types_price/:model_type_slug', to: 'api_v1#model_type_price', default: {format: 'json'}
+  post :token, controller: 'api_v1', default: {format: 'json'}
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

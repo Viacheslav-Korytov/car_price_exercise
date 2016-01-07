@@ -1,10 +1,12 @@
 class ModelTypesController < ApplicationController
+  before_action :set_organization
+  before_action :set_car_model
   before_action :set_model_type, only: [:show, :edit, :update, :destroy]
 
   # GET /model_types
   # GET /model_types.json
   def index
-    @model_types = ModelType.all
+    @model_types = @car_model.model_types.all
   end
 
   # GET /model_types/1
@@ -14,7 +16,7 @@ class ModelTypesController < ApplicationController
 
   # GET /model_types/new
   def new
-    @model_type = ModelType.new
+    @model_type = @car_model.model_types.new
   end
 
   # GET /model_types/1/edit
@@ -24,11 +26,11 @@ class ModelTypesController < ApplicationController
   # POST /model_types
   # POST /model_types.json
   def create
-    @model_type = ModelType.new(model_type_params)
+    @model_type = @car_model.model_types.new(model_type_params)
 
     respond_to do |format|
       if @model_type.save
-        format.html { redirect_to @model_type, notice: 'Model type was successfully created.' }
+        format.html { redirect_to car_model_model_type_path(@car_model, @model_type), notice: 'Model type was successfully created.' }
         format.json { render :show, status: :created, location: @model_type }
       else
         format.html { render :new }
@@ -42,7 +44,7 @@ class ModelTypesController < ApplicationController
   def update
     respond_to do |format|
       if @model_type.update(model_type_params)
-        format.html { redirect_to @model_type, notice: 'Model type was successfully updated.' }
+        format.html { redirect_to car_model_model_type_path(@car_model, @model_type), notice: 'Model type was successfully updated.' }
         format.json { render :show, status: :ok, location: @model_type }
       else
         format.html { render :edit }
@@ -56,7 +58,7 @@ class ModelTypesController < ApplicationController
   def destroy
     @model_type.destroy
     respond_to do |format|
-      format.html { redirect_to model_types_url, notice: 'Model type was successfully destroyed.' }
+      format.html { redirect_to car_model_model_type_path(@car_model, @model_type), notice: 'Model type was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -64,11 +66,15 @@ class ModelTypesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_model_type
-      @model_type = ModelType.find(params[:id])
+      @model_type = @car_model.model_types.where(model_type_slug: params[:id]).first
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def model_type_params
       params.require(:model_type).permit(:name, :model_type_slug, :model_type_code, :base_price, :car_model_id)
+    end
+		
+    def set_car_model
+      @car_model = @organization.car_models.where(model_slug: params[:car_model_id]).first
     end
 end
